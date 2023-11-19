@@ -12,16 +12,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(to bottom right, #667eea, #764ba2);
+            background: #d4e6d1;
             font-family: 'Arial', sans-serif;
         }
 
         .dashboard-container {
             max-width: 500px;
             padding: 30px;
-            background-color: #ffffff;
             border-radius: 15px;
-            box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.1);
         }
 
         .info-box {
@@ -47,6 +45,7 @@
             <h4>本月感染率：{{ $infectionRate ?? 0}}%</h4>
         </div>
         <a href="{{ route('bottle') }}" class="btn btn-primary btn-block">开始分配花苗</a>
+        <a href="{{ route('status') }}" class="btn btn-primary btn-block">标记状态</a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>

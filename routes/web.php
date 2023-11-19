@@ -31,7 +31,7 @@ Route::post('/logout', 'App\Http\Controllers\AuthController@logout')->name('logo
 Route::post('/save-bottle-data', 'App\Http\Controllers\BottleController@saveData')->name('saveBottle');
 Route::get('/bottles', 'App\Http\Controllers\BottleController@index')->name('bottles');
 Route::post('/update-bottle-status', 'App\Http\Controllers\BottleStatusController@updateStatus')->name('changeStatus');
-Route::get('/update-bottle-status', 'App\Http\Controllers\BottleStatusController@index');
+Route::get('/update-bottle-status', 'App\Http\Controllers\BottleStatusController@index')->name('status');
 
 
 
