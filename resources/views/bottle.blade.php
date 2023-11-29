@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>花苗分割操作</title>
-    {{-- <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}"> --}}
-    <link rel="stylesheet" href="http://127.0.0.1:8000/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
 
@@ -26,9 +25,11 @@
             margin-top: 0.5rem;
         }
 
-        .btn-primary, .btn-success, .btn-danger {
+        .btn-primary,
+        .btn-success,
+        .btn-danger {
             border-radius: 5px;
-            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
 
         .btn-primary {
@@ -46,11 +47,15 @@
             transition: background-color 0.3s ease;
             font-size: 14px;
             position: absolute;
-            right: -33px;  /* 设置为负值，使按钮开始时被隐藏 */
+            right: -33px;
+            /* 设置为负值，使按钮开始时被隐藏 */
             top: 50%;
-            transform: translateY(30%);  /* 垂直居中 */
-            width: 60px;  /* 按钮的宽度 */
-            height: 30px;  /* 按钮的高度 */
+            transform: translateY(30%);
+            /* 垂直居中 */
+            width: 60px;
+            /* 按钮的宽度 */
+            height: 30px;
+            /* 按钮的高度 */
         }
 
         .table {
@@ -63,11 +68,11 @@
             overflow: hidden;
         }
 
-        .slide-row > td {
+        .slide-row>td {
             position: relative;
         }
 
-        .slide-row > td.delete-container {
+        .slide-row>td.delete-container {
             width: 0;
             padding: 0;
             border: none;
@@ -127,7 +132,6 @@
             padding-top: 0;
             padding-bottom: 60px;
         }
-
     </style>
 </head>
 
@@ -160,7 +164,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                 </tbody>
             </table>
         </div>
@@ -176,7 +180,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                 </tbody>
             </table>
         </div>
@@ -191,13 +195,13 @@
 
     </div>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             let startPos = 0;
             let currentTransform = 0;
             let currentScanState = 'original';
             let $scanResult = $("#scanResult");
-    
-            document.getElementById('startBtn').addEventListener('click', function() {
+
+            document.getElementById('startBtn').addEventListener('click', function () {
                 if (currentScanState === 'original') {
                     currentScanState = 'new';
                     this.textContent = '扫描新瓶';
@@ -207,21 +211,21 @@
                 }
             });
 
-            $('tbody').on('touchstart', 'tr', function(e) {
+            $('tbody').on('touchstart', 'tr', function (e) {
                 startPos = e.originalEvent.touches[0].clientX;
                 currentTransform = parseInt($(this).find('td').css('transform').split(',')[4]) || 0;
             });
-    
-            $('tbody').on('touchmove', 'tr', function(e) {
+
+            $('tbody').on('touchmove', 'tr', function (e) {
                 let endPos = e.originalEvent.touches[0].clientX;
                 let move = currentTransform + (endPos - startPos);
-    
+
                 if (move <= 0 && move >= -80) {
                     $(this).find('td').css('transform', `translateX(${move}px)`);
                 }
             });
-    
-            $('tbody').on('touchend', 'tr', function() {
+
+            $('tbody').on('touchend', 'tr', function () {
                 let movedDistance = parseInt($(this).find('td').css('transform').split(',')[4]);
                 if (movedDistance < -40) {
                     $(this).find('td').css('transform', 'translateX(-80px)');
@@ -230,7 +234,7 @@
                 }
             });
 
-            $('tbody').on('click', '.delete-btn', function() {
+            $('tbody').on('click', '.delete-btn', function () {
                 $(this).closest('tr').remove();
             });
 
@@ -239,7 +243,7 @@
                 return;
             }
 
-            document.getElementById('startScan').addEventListener('click', function() {
+            document.getElementById('startScan').addEventListener('click', function () {
                 let scanCounts = {};
                 let idealWidth, idealHeight;
                 const requiredCounts = 3;
@@ -253,7 +257,7 @@
                     idealWidth = Math.max(window.innerWidth, window.innerHeight);
                     idealHeight = Math.min(window.innerWidth, window.innerHeight);
                 }
-                
+
                 Quagga.init({
                     inputStream: {
                         type: 'LiveStream',
@@ -261,26 +265,26 @@
                             facingMode: 'environment',
                             width: { min: idealWidth },
                             height: { min: idealHeight / 2 },
-                            aspectRatio: {min: 1, max: 2}
+                            aspectRatio: { min: 1, max: 2 }
                         },
-                        target: document.querySelector('#preview') 
+                        target: document.querySelector('#preview')
                     },
                     decoder: {
                         readers: ['code_128_reader', 'ean_reader'],
                         multiple: false
                     }
-                }, function(err) {
+                }, function (err) {
                     if (err) {
                         console.log(err);
                         return;
                     }
-                    
+
                     Quagga.start();
                 });
 
                 var lastResult;
 
-                Quagga.onDetected(function(result) {
+                Quagga.onDetected(function (result) {
                     var code = result.codeResult.code;
 
                     scanCounts[code] = (scanCounts[code] || 0) + 1;
@@ -310,7 +314,7 @@
             function updateOriginalVaseResult(code) {
                 // 检查原始花瓶中是否已经存在该条形码
                 let isCodeAlreadyPresent = false;
-                $(".bg-white.p-4.mb-3:first").find("tbody tr").each(function() {
+                $(".bg-white.p-4.mb-3:first").find("tbody tr").each(function () {
                     if ($(this).find('td:nth-child(2)').text() === code) {
                         isCodeAlreadyPresent = true;
                         return false; // 如果找到，退出循环
@@ -333,7 +337,7 @@
 
             function isNewVaseCodePresent(code) {
                 let isNewCodePresent = false;
-                $(".bg-white.p-4.mb-3:last").find("tbody tr").each(function() {
+                $(".bg-white.p-4.mb-3:last").find("tbody tr").each(function () {
                     if ($(this).find('td:nth-child(2)').text() === code) {
                         isNewCodePresent = true;
                         return false;
@@ -357,7 +361,7 @@
             // 初始化 type 为 'O'（拆分操作）
             let type = 'O';
 
-            $('#toggleOperationBtn').on('click', function() {
+            $('#toggleOperationBtn').on('click', function () {
                 // 切换按钮文本和 type 值
                 if (type === 'O') {
                     $(this).text('花苗合并');
@@ -368,15 +372,15 @@
                 }
             });
 
-            $('#submitBtn').on('click', function() {
+            $('#submitBtn').on('click', function () {
                 // 构建要发送的数据
                 let originalVases = [];
-                $(".bg-white.p-4.mb-3:first").find("tbody tr").each(function() {
+                $(".bg-white.p-4.mb-3:first").find("tbody tr").each(function () {
                     originalVases.push($(this).find('td:nth-child(2)').text());
                 });
 
                 let newVases = [];
-                $(".bg-white.p-4.mb-3:last").find("tbody tr").each(function() {
+                $(".bg-white.p-4.mb-3:last").find("tbody tr").each(function () {
                     newVases.push($(this).find('td:nth-child(2)').text());
                 });
 
@@ -403,15 +407,15 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')  // 添加 CSRF 令牌
                     },
-                    success: function(response) {
+                    success: function (response) {
                         // 处理服务器的响应。例如，显示一条消息或重定向用户。
                         console.log(response);
-                        
+
                         requestSucceeded = true;  // 如果没有失败的条码，直接设置成功标志
                     },
-                    error: function(jqXHR, textStatus, errorThrown) {
+                    error: function (jqXHR, textStatus, errorThrown) {
                         // 处理错误
-                            console.error('Error:', errorThrown);
+                        console.error('Error:', errorThrown);
 
                         // 尝试解析响应文本以获取更详细的错误信息
                         try {
@@ -425,7 +429,7 @@
 
                         requestSucceeded = false;  // 设置失败标志
                     },
-                    complete: function() {
+                    complete: function () {
                         // 如果请求成功，则重定向到 '/bottles'
                         if (requestSucceeded) {
                             window.location.href = '{{ route("bottles") }}';
@@ -439,4 +443,3 @@
 </body>
 
 </html>
-

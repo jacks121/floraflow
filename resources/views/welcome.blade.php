@@ -8,47 +8,83 @@
     <link rel="stylesheet" href="http://127.0.0.1:8000/css/bootstrap.min.css">
     <style>
         body {
-            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #d4e6d1;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #d4e6d1;
-            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            margin: 0;
         }
 
         .dashboard-container {
-            max-width: 500px;
-            padding: 30px;
-            border-radius: 15px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        .logo {
+            background-image: url('ff.png');
+            /* 根据需要替换为相应的图片路径 */
+            height: 150px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin-bottom: 20px;
         }
 
         .info-box {
-            padding: 20px;
-            border: 1px solid #eaeaea;
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            color: #333;
             margin-bottom: 20px;
-            text-align: center;
-            border-radius: 10px;
+        }
+
+        h4 {
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            background-color: #333;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            margin-bottom: 10px;
+        }
+
+        .btn-primary {
+            background-color: #e63946;
         }
     </style>
 </head>
 
-<body>
-    <div class="dashboard-container">
-        <h2 class="text-center mb-5">首页</h2>
-        <div class="info-box">
-            <h4>姓名：{{auth()->user()->name ?? ''}}</h4>
-        </div>
-        <div class="info-box">
-            <h4>本月分配花苗总数：{{ $totalBottlesThisMonth ?? 0 }}</h4>
-        </div>
-        <div class="info-box">
-            <h4>本月感染率：{{ $infectionRate ?? 0}}%</h4>
-        </div>
-        <a href="{{ route('bottle') }}" class="btn btn-primary btn-block">开始分配花苗</a>
-        <a href="{{ route('status') }}" class="btn btn-primary btn-block">标记状态</a>
+<div class="dashboard-container">
+    <div class="logo"></div>
+    <h2 class="text-center">首页</h2>
+    <div class="info-box">
+        <h4>姓名：{{ auth()->user()->name ?? '' }}</h4>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+    <div class="info-box">
+        <h4>本月分配花苗总数：{{ $totalBottlesThisMonth ?? 0 }}</h4>
+    </div>
+    <div class="info-box">
+        <h4>本月感染率：{{ $infectionRate ?? 0 }}%</h4>
+    </div>
+    <a href="{{ route('bottle') }}" class="btn btn-primary">开始分配花苗</a>
+    <a href="{{ route('status') }}" class="btn">标记状态</a>
+</div>
 
 </html>
