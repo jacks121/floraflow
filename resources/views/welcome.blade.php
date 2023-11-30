@@ -63,6 +63,8 @@
             font-size: 16px;
             text-decoration: none;
             margin-bottom: 10px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .btn-primary {
