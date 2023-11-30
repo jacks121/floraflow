@@ -6,8 +6,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>瓶子状态更新</title>
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+    <script src="{{ asset('js/jquery-1.11.3.min.js') }}"></script>
+    <script src="{{ asset('js/quagga.min.js') }}"></script>
     <style>
         body {
             background-color: #f5f5f5;
