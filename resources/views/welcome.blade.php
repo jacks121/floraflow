@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>用户首页</title>
-    <link rel="stylesheet" href="http://127.0.0.1:8000/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <style>
         body {
             font-family: Arial, sans-serif;
